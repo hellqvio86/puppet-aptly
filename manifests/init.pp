@@ -23,6 +23,7 @@ class aptly (
   $ppa_dist             = $aptly::params::ppa_dist,
   $ppa_codename         = $aptly::params::ppa_codename,
   $properties           = $aptly::params::properties,
+  $service_provider     = $aptly::params::service_provider,
   $s3_publish_endpoints = $aptly::params::s3_publish_endpoints,
   $swift_publish_endpoints = $aptly::params::swift_publish_endpoints,
   $enable_api           = $aptly::params::enable_api,
