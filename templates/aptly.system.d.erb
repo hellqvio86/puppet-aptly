@@ -1,0 +1,15 @@
+[Unit]
+Description=Aptly
+After=syslog.target network.target
+
+[Service]
+Type=simple
+#Script below is using python env
+ExecStart=/usr/bin/aptly serve --listen=<%= scope.lookupvar('aptly::bind') %>:<%= scope.lookupvar('aptly::port') %> -config=<%= scope.lookupvar('aptly::config_filepath') %>
+User=<%= scope.lookupvar('aptly::user') %>
+Group=<%= scope.lookupvar('aptly::group') %>
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
