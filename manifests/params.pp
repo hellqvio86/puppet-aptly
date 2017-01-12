@@ -35,6 +35,7 @@ class aptly::params {
     'downloadSourcePackages'      => false,
     }
   $s3_publish_endpoints = {}
+  $service_provider     = 'init',
   $swift_publish_endpoints = {}
   $enable_api           = false
   $api_port             = 8081
