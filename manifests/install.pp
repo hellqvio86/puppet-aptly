@@ -74,38 +74,40 @@ class aptly::install {
   package { 'aptly':
     ensure   => $aptly::version,
   }
-
-  file{ '/etc/init.d/aptly':
-    ensure  => present,
-    content => template('aptly/aptly.init.d.erb'),
-    mode    => '0755',
-    owner   => 'root',
-    group   => 'root',
+  
+  case $aptly::service_provider {
+    'systemd': {
+      file{ '/etc/systemd/system/aptly.service':
+        ensure  => present,
+        content => template('aptly/aptly.system.d.erb'),
+        mode    => '0755',
+        owner   => 'root',
+        group   => 'root',
+      }
+    }
+    default: {
+      file{ '/etc/init.d/aptly':
+       ensure  => present,
+       content => template('aptly/aptly.init.d.erb'),
+       mode    => '0755',
+       owner   => 'root',
+       group   => 'root',
+      }
+    }
   }
-
+  
   $nolock = $aptly::api_nolock ? {
     true  => '-no-lock=true',
     false => '-no-lock=false',
   }
 
   $api_opts = "--listen ${aptly::api_bind}:${aptly::api_port} ${nolock}"
-  
-  case $::osfamily {
-    'FreeBSD': {
-      include freebsd
-    }
-    'Debian': {
-      include debian
-    }
-    default: {
-      file{ '/etc/init.d/aptly-api':
-        ensure  => present,
-        content => template('aptly/aptly-api.init.d.erb'),
-        mode    => '0755',
-        owner   => 'root',
-        group   => 'root',
-      }
-    }
-  }
 
+  file{ '/etc/init.d/aptly-api':
+    ensure  => present,
+    content => template('aptly/aptly-api.init.d.erb'),
+    mode    => '0755',
+    owner   => 'root',
+    group   => 'root',
+  }  
 }
