@@ -89,12 +89,23 @@ class aptly::install {
   }
 
   $api_opts = "--listen ${aptly::api_bind}:${aptly::api_port} ${nolock}"
-
-  file{ '/etc/init.d/aptly-api':
-    ensure  => present,
-    content => template('aptly/aptly-api.init.d.erb'),
-    mode    => '0755',
-    owner   => 'root',
-    group   => 'root',
+  
+  case $::osfamily {
+    'FreeBSD': {
+      include freebsd
+    }
+    'Debian': {
+      include debian
+    }
+    default: {
+      file{ '/etc/init.d/aptly-api':
+        ensure  => present,
+        content => template('aptly/aptly-api.init.d.erb'),
+        mode    => '0755',
+        owner   => 'root',
+        group   => 'root',
+      }
+    }
   }
+
 }
