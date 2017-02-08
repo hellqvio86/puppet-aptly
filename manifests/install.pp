@@ -7,6 +7,7 @@ class aptly::install {
   if ! defined(User[$aptly::user]) {
     user { $aptly::user:
       ensure  => present,
+      home    => $aptly::root_dir,
       uid     => $aptly::uid,
       gid     => $aptly::group,
       shell   => '/bin/bash',
