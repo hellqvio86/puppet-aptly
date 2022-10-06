@@ -9,7 +9,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     CFPropertyList (2.2.8)
-    addressable (2.4.0)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     aws-sdk (1.66.0)
       aws-sdk-v1 (= 1.66.0)
     aws-sdk-v1 (1.66.0)
@@ -271,6 +272,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    public_suffix (5.0.0)
     puppet (4.5.2)
       CFPropertyList (~> 2.2.6)
       facter (> 2.0, < 4)
